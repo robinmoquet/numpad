@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './components/Navbar';
+import ContainerQuestion from './components/ContainerQuestion';
+import Sidebar from './components/Sidebar';
+import AnimationIntersectionObserver from './components/AnimationIntersectionObserver';
+import { connect } from 'react-redux';
 
-function App() {
+function App(state: any) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App min-h-screen">
+        <AnimationIntersectionObserver>
+          <Navbar />
+          <div className="content flex p-5 mt-10 reveal">
+            {(state.onGame ? (
+              <>
+                <ContainerQuestion />
+                <Sidebar />
+              </>
+            ) : null)}
+          </div>
+        </AnimationIntersectionObserver>
     </div>
   );
 }
 
-export default App;
+// @ts-ignore
+export default connect(state => ({onGame: state.onGame}))(App);
